@@ -1,0 +1,25 @@
+<!DOCTYPE html><html><head><title>Login Page</title></head><body><form id="login-form"><label for="username">Username:</label><input type="text" id="username" name="username"><br><label for="password">Password:</label><input type="password" id="password" name="password"><br><br><input type="button" value="Login" onclick="login()"></form><script>
+    function login() {
+        // Get the user's input
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        // Create a JSON object with the user's input
+        var user = {
+            "username": username,
+            "password": password
+        };// Send a request to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://yourserver.com/login", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    alert("Welcome, " + response.username + "!");
+                } else {
+                    alert("Invalid login. Please try again.");
+                }
+            }
+        };
+        xhr.send(JSON.stringify(user));
+    }</script></body></html>
